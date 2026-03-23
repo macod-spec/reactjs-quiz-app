@@ -1,0 +1,31 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: quiz-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build:
+      context: ./backend
+    container_name: quiz-backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./backend/.env.docker
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./quiz-app
+    container_name: quiz-frontend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:
