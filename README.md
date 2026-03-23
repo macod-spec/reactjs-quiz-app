@@ -28,16 +28,17 @@ I extended this project by:
 
 ## How to Run the Project
 
-### 1. Clone the repository  
-```bash
+**1. Clone the repository **
+
 git clone https://github.com/macod-spec/reactjs-quiz-app.git
 cd reactjs-quiz-app
 
 
-### 2. Run with Docker 
+**2. Run with Docker **
 docker compose up --build
 
-### 3. Access the application
+
+**3. Access the application**
 	Frontend: http://localhost:8080
 	Backend: http://localhost:3000
 
