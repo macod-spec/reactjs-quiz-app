@@ -35,10 +35,14 @@ cd reactjs-quiz-app
 
 
 **2. Run with Docker **
+
+
 docker compose up --build
 
 
 **3. Access the application**
+
+
 	Frontend: http://localhost:8080
 	Backend: http://localhost:3000
 
