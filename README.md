@@ -15,6 +15,8 @@ I extended this project by:
 - Ensuring all services run together seamlessly  
 
 
+Note: This repository was forked from an existing project. My implementation in this version focused on Dockerizing the frontend, backend, and database using Docker and Docker Compose.
+
 
 ## 🧱 Architecture
 
@@ -48,7 +50,7 @@ docker compose up --build
 
 
 
-Note: This repository was forked from an existing project. My implementation in this version focused on Dockerizing the frontend, backend, and database using Docker and Docker Compose.
+
 
 
 
