@@ -2,7 +2,7 @@
 
 This project is a full-stack quiz application built with React, Node.js, and MongoDB, fully containerized using Docker and Docker Compose.
 
----
+
 
 ## 📝 My Contribution
 
@@ -14,7 +14,7 @@ I extended this project by:
 - Configuring environment variables for backend-to-database communication  
 - Ensuring all services run together seamlessly  
 
----
+
 
 ## 🧱 Architecture
 
@@ -23,14 +23,13 @@ I extended this project by:
 - **Database**: MongoDB (port 27017)  
 - **Containerization**: Docker & Docker Compose  
 
----
 
-## ⚙️ How to Run the Project
+
 
 ## How to Run the Project
 
-### 1. Clone the repository
-.```bash
+### 1. Clone the repository  
+```bash
 git clone https://github.com/macod-spec/reactjs-quiz-app.git
 cd reactjs-quiz-app
 
@@ -39,8 +38,8 @@ cd reactjs-quiz-app
 docker compose up --build
 
 ### 3. Access the application
-	•	Frontend: http://localhost:8080
-	•	Backend: http://localhost:3000
+	Frontend: http://localhost:8080
+	Backend: http://localhost:3000
 
 
 
