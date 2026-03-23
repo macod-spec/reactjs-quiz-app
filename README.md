@@ -28,7 +28,8 @@ I extended this project by:
 
 ## How to Run the Project
 
-### 1. Clone the repository  ```bash
+### 1. Clone the repository  
+```bash
 git clone https://github.com/macod-spec/reactjs-quiz-app.git
 cd reactjs-quiz-app
 
