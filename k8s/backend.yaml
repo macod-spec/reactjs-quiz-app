@@ -4,6 +4,7 @@ metadata:
   name: quiz-backend
   namespace: quiz-prod
 spec:
+type: ClusterIP
   replicas: 1
   selector:
     matchLabels:

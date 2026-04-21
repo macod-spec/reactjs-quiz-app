@@ -1,0 +1,32 @@
+steps:
+# Build backend image
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '-t',
+    'europe-west2-docker.pkg.dev/$PROJECT_ID/quiz-images/quiz-backend:v1',
+    './backend'
+  ]
+
+# Build frontend image
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '-t',
+    'europe-west2-docker.pkg.dev/$PROJECT_ID/quiz-images/quiz-frontend:v1',
+    './quiz-app'
+  ]
+
+# Push backend
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'push',
+    'europe-west2-docker.pkg.dev/$PROJECT_ID/quiz-images/quiz-backend:v1'
+  ]
+
+# Push frontend
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'push',
+    'europe-west2-docker.pkg.dev/$PROJECT_ID/quiz-images/quiz-frontend:v1'
+  ]

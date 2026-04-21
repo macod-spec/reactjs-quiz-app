@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: europe-west2-docker.pkg.dev/mac-terraform-state-12345/quiz-images/quiz-frontend:v3
+          image: europe-west2-docker.pkg.dev/mac-terraform-state-12345/quiz-images/quiz-frontend:v4
           ports:
             - containerPort: 8080
 ---
