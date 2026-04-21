@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: quiz-backend
+  namespace: quiz-prod
 spec:
   replicas: 1
   selector:
@@ -13,22 +14,22 @@ spec:
         app: quiz-backend
     spec:
       containers:
-      - name: backend
-        image: quiz-backend:local
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 3000
-        env:
-        - name: MONGO_URI
-          value: mongodb://quiz-mongo:27017/quizdb
+        - name: backend
+          image: europe-west2-docker.pkg.dev/mac-terraform-state-12345/quiz-images/quiz-backend:v1
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MONGO_URI
+              value: mongodb://quiz-mongo:27017/quizdb
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: quiz-backend
+  namespace: quiz-prod
 spec:
   selector:
     app: quiz-backend
   ports:
-  - port: 3000
-    targetPort: 3000
+    - port: 3000
+      targetPort: 3000
