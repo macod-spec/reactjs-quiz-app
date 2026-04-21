@@ -1,58 +1,145 @@
-# 🚀 React Quiz App – Dockerized Full Stack Application
 
-This project is a full-stack quiz application built with React, Node.js, and MongoDB, fully containerized using Docker and Docker Compose.
+React Quiz App – Cloud-Native Full Stack Application (Docker + Kubernetes + GCP)
 
-
-
-## 📝 My Contribution
-
-I extended this project by:
-
-- Containerizing the frontend, backend, and database using Docker  
-- Creating Dockerfiles for both frontend and backend services  
-- Setting up Docker Compose for multi-container orchestration  
-- Configuring environment variables for backend-to-database communication  
-- Ensuring all services run together seamlessly  
+This project is a full-stack quiz application built with React, Node.js, and MongoDB, deployed using Docker, Kubernetes (GKE), and Google Cloud Platform.
 
 
-Note: This repository was forked from an existing project. My implementation in this version focused on Dockerizing the frontend, backend, and database using Docker and Docker Compose.
+My Contribution
 
+I extended this project beyond a basic setup by:
 
-## 🧱 Architecture
+* Containerizing the frontend and backend using Docker
+* Building and pushing images to Google Artifact Registry
+* Deploying the application to Google Kubernetes Engine (GKE)
+* Creating Kubernetes manifests for:
+    * Deployments
+    * Services
+    * Namespace isolation
+* Configuring internal service communication within Kubernetes
+* Exposing only the frontend via a public LoadBalancer
+* Securing the backend by restricting it to internal cluster access
+* Seeding MongoDB from within the Kubernetes cluster
+* Troubleshooting networking issues between frontend and backend
 
-- **Frontend**: React (served on port 8080)  
-- **Backend**: Node.js API (port 3000)  
-- **Database**: MongoDB (port 27017)  
-- **Containerization**: Docker & Docker Compose  
+Note: This repository was originally forked. My work focuses on containerization, cloud deployment, and Kubernetes orchestration.
 
 
 
+Architecture
 
-## How to Run the Project
+* Frontend: React (served via Kubernetes LoadBalancer on port 8080)
+* Backend: Node.js API (internal Kubernetes service on port 3000)
+* Database: MongoDB (internal service on port 27017)
+* Containerization: Docker
+* Orchestration: Kubernetes (GKE)
+* Cloud Platform: Google Cloud Platform (GCP)
 
-**1. Clone the repository **
-
-git clone https://github.com/macod-spec/reactjs-quiz-app.git
-cd reactjs-quiz-app
 
 
-**2. Run with Docker **
+System Flow
 
+User → Frontend (LoadBalancer) → Backend (ClusterIP) → MongoDB
+
+* Only the frontend is publicly accessible
+* Backend and database are internal to the cluster
+
+
+
+Deployment (Kubernetes on GCP)
+
+1. Build and push images
+
+gcloud builds submit ./quiz-app \
+--tag europe-west2-docker.pkg.dev/<PROJECT_ID>/quiz-images/quiz-frontend:<TAG>
+gcloud builds submit ./backend \
+--tag europe-west2-docker.pkg.dev/<PROJECT_ID>/quiz-images/quiz-backend:<TAG>
+
+
+
+2. Apply Kubernetes manifests
+
+kubectl apply -f k8s/namespace.yaml
+kubectl apply -f k8s/mongo.yaml
+kubectl apply -f k8s/backend.yaml
+kubectl apply -f k8s/frontend.yaml
+
+
+
+3. Verify deployment
+
+kubectl get pods -n quiz-prod
+kubectl get svc -n quiz-prod
+
+
+
+4. Access the application
+
+Frontend (public):
+
+http://<EXTERNAL-IP>:8080
+
+
+
+Local Development (Docker Compose)
+
+Run locally:
 
 docker compose up --build
 
+Access locally:
 
-**3. Access the application**
-
-
-	Frontend: http://localhost:8080
-	Backend: http://localhost:3000
+* Frontend: http://localhost:8080
+* Backend: http://localhost:3000
 
 
 
+📁 Project Structure
+
+reactjs-quiz-app/
+│
+├── k8s/                # Kubernetes manifests
+│   ├── namespace.yaml
+│   ├── mongo.yaml
+│   ├── backend.yaml
+│   └── frontend.yaml
+│
+├── quiz-app/           # React frontend
+├── backend/            # Node.js API
+├── docker-compose.yml
+└── README.md
 
 
 
+🔐 Security Improvements
+
+* Backend exposed internally using ClusterIP
+* Frontend exposed via LoadBalancer
+* No secrets stored in source control
+* Service-to-service communication handled via Kubernetes DNS
 
 
 
+🧠 Key Learnings
+
+* Kubernetes service types (ClusterIP vs LoadBalancer)
+* Internal vs external service communication
+* Debugging container networking issues
+* Deploying multi-tier apps on GKE
+* Image management with Artifact Registry
+
+
+
+📌 Future Improvements
+
+* Add HTTPS using Ingress + SSL
+* Introduce authentication (JWT)
+* Use environment-based configuration
+* Add CI/CD pipeline (GitHub Actions)
+* Add monitoring/logging (Cloud Monitoring)
+
+
+
+* badges (GCP, Docker, Kubernetes)
+* or turn this into a portfolio project write-up
+
+Just say 👍
