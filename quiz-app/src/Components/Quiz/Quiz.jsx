@@ -22,8 +22,8 @@ const Quiz = () => {
     const fetchQuestions = async () => {
       if (startQuiz) {
         try {
-          // const apiUrl = import.meta.env.VITE_REACT_APP_API_URL || 'http://34.13.52.111:3000/api/questions';
-          const apiUrl = "http://34.13.52.111:3000/api/questions"
+          // const apiUrl = import.meta.env.VITE_REACT_APP_API_URL || 'http://quiz-backend:3000/api/questions';
+          const apiUrl = "/api/questions"
           const response = await fetch(apiUrl);
           if (!response.ok) throw new Error("Failed to fetch");
           let questions = await response.json();
@@ -104,7 +104,7 @@ const Quiz = () => {
   if (!startQuiz) {
     return (
       <div className="container">
-        <h1>Quiz App</h1>
+        <h1>Quiz App - Verson 2 (GKE) </h1>
         <hr />
         <form onSubmit={handleSubmit}>
           <div>
