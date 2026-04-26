@@ -1,32 +1,29 @@
 steps:
-# Build backend image
+# Build image
 - name: 'gcr.io/cloud-builders/docker'
-  args: [
-    'build',
-    '-t',
-    'europe-west2-docker.pkg.dev/$PROJECT_ID/quiz-images/quiz-backend:v1',
-    './backend'
-  ]
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/quiz-frontend:$SHORT_SHA', '.']
 
-# Build frontend image
+# Push image
 - name: 'gcr.io/cloud-builders/docker'
-  args: [
-    'build',
-    '-t',
-    'europe-west2-docker.pkg.dev/$PROJECT_ID/quiz-images/quiz-frontend:v1',
-    './quiz-app'
-  ]
+  args: ['push', 'gcr.io/$PROJECT_ID/quiz-frontend:$SHORT_SHA']
 
-# Push backend
-- name: 'gcr.io/cloud-builders/docker'
-  args: [
-    'push',
-    'europe-west2-docker.pkg.dev/$PROJECT_ID/quiz-images/quiz-backend:v1'
-  ]
+# Update Kubernetes manifest (THIS is the key GitOps step)
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: bash
+  args:
+    - '-c'
+    - |
+      git config --global user.email "you@example.com"
+      git config --global user.name "cloud-build"
 
-# Push frontend
-- name: 'gcr.io/cloud-builders/docker'
-  args: [
-    'push',
-    'europe-west2-docker.pkg.dev/$PROJECT_ID/quiz-images/quiz-frontend:v1'
-  ]
+      git clone https://github.com/macod-spec/reactjs-quiz-app.git
+      cd reactjs-quiz-app
+
+      sed -i "s|image:.*|image: gcr.io/$PROJECT_ID/quiz-frontend:$SHORT_SHA|g" k8s/frontend.yaml
+
+      git add .
+      git commit -m "Update image to $SHORT_SHA"
+      git push https://$(gcloud secrets versions access latest --secret=github-token)@github.com/macod-spec/reactjs-quiz-app.git HEAD:master
+
+images:
+- 'gcr.io/$PROJECT_ID/quiz-frontend:$SHORT_SHA'
