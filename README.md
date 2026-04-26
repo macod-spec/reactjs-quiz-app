@@ -144,3 +144,34 @@ reactjs-quiz-app/
 
 Just say 👍
 # Argo CD GitOps test - Sun Apr 26 10:07:30 AM UTC 2026
+
+## 🚀 CI/CD & GitOps Pipeline
+
+This project implements a full GitOps workflow using Argo CD and Google Cloud Build.
+
+### Flow
+
+1. Developer pushes code to GitHub
+2. Cloud Build is triggered automatically
+3. Docker images are built and pushed to Artifact Registry
+4. Kubernetes manifests reference the updated image
+5. Argo CD detects changes in Git
+6. Argo CD syncs the cluster state automatically
+
+### Key Tools
+
+- **Google Cloud Build** → CI pipeline
+- **Artifact Registry** → container storage
+- **Google Kubernetes Engine (GKE)** → runtime environment
+- **Argo CD** → GitOps continuous deployment
+
+### GitOps Principle
+
+The cluster state is fully driven by Git.  
+No manual `kubectl apply` is required after setup.
+
+### Verification
+
+- Cloud Build triggers on every push
+- Argo CD shows `Healthy` and `Synced`
+- Application updates automatically without manual intervention
